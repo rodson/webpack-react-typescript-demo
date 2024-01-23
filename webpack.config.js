@@ -1,10 +1,10 @@
-import path from "path";
-import { Configuration } from "webpack";
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const path = require("path");
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const devMode = process.env.NODE_ENV !== "production";
 
-const config: Configuration = {
+const config = {
   mode: devMode ? "development" : "production",
   entry: "./src/index.tsx",
   module: {
@@ -17,9 +17,9 @@ const config: Configuration = {
       {
         test: /\.css$/,
         use: [
-			devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-			"css-loader"
-		],
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader"
+		    ],
       },
     ],
   },
@@ -30,12 +30,15 @@ const config: Configuration = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
+  devServer: {
+	  hot: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
 		template: path.resolve(__dirname, "public", "index.html")
     }),
-	... (devMode ? [] : [new MiniCssExtractPlugin()]),
+	... (devMode ? [] : [new MiniCssExtractPlugin(), new webpack.HotModuleReplacementPlugin()]),
   ],
 };
 
-export default config;
+module.exports = config;
