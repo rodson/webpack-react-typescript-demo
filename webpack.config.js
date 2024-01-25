@@ -1,12 +1,14 @@
 const path = require("path");
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const devMode = process.env.NODE_ENV !== "production";
 
 const config = {
   mode: devMode ? "development" : "production",
-  entry: "./src/index.tsx",
+  entry: {
+    main: "./src/index.tsx",
+  },
   module: {
     rules: [
       {
@@ -27,17 +29,18 @@ const config = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
   devServer: {
-	  hot: true,
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
 		template: path.resolve(__dirname, "public", "index.html")
     }),
-	... (devMode ? [] : [new MiniCssExtractPlugin(), new webpack.HotModuleReplacementPlugin()]),
+	... (devMode ? [new ReactRefreshWebpackPlugin()] : [new MiniCssExtractPlugin()]),
   ],
 };
 

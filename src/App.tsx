@@ -6,7 +6,7 @@ export default function App() {
 
   return (
     <main>
-      <p>Appaa</p>
+      <p>Apaaaaaa</p>
 	  { count }
 	  <button onClick={() => setCount((count) => ++count)}>click</button>
       <Footer />
