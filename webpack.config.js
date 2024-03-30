@@ -38,9 +38,9 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-		template: path.resolve(__dirname, "public", "index.html")
+      template: path.resolve(__dirname, "public", "index.html")
     }),
-	... (devMode ? [new ReactRefreshWebpackPlugin()] : [new MiniCssExtractPlugin()]),
+	  ... (devMode ? [new ReactRefreshWebpackPlugin()] : [new MiniCssExtractPlugin()]),
   ],
 };
 
