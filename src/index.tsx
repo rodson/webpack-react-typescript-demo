@@ -3,12 +3,14 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './App.css';
 
-const rootElement = document.getElementById('root');
+const rootElement: HTMLElement | null = document.getElementById('root');
 
-const root = createRoot(rootElement as HTMLElement);
+if (rootElement !== null) {
+  const root = createRoot(rootElement);
 
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+  root.render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+}
